@@ -54,20 +54,20 @@ const ChatInterface = ({
               <Avatar className="h-16 w-16 mb-4">
                 <AvatarImage
                   src="https://images.unsplash.com/photo-1603548746365-6ca5b2a3d8f6?w=250&q=80"
-                  alt="Bhagavad Gita AI"
+                  alt="Bhāgavatam"
                 />
-                <AvatarFallback>BG</AvatarFallback>
+                <AvatarFallback>BV</AvatarFallback>
               </Avatar>
               <h2 className="text-2xl font-semibold mb-2">
-                Welcome to Bhagavad Gita AI
+                Welcome to Bhāgavatam
               </h2>
               <p className="text-muted-foreground mb-4">
-                Ask any question about the teachings of the Bhagavad Gita and
+                Ask any question about the teachings of the Bhāgavatam and
                 receive wisdom based on its timeless principles.
               </p>
               <p className="text-sm text-muted-foreground">
-                Try asking: "What does the Gita say about duty?" or "How can I
-                find inner peace?"
+                Try asking: "What does the Bhāgavatam say about duty?" or "How
+                can I find inner peace?"
               </p>
             </div>
           )}
@@ -89,13 +89,11 @@ const ChatInterface = ({
                     <Avatar className="h-6 w-6 mr-2">
                       <AvatarImage
                         src="https://images.unsplash.com/photo-1603548746365-6ca5b2a3d8f6?w=100&q=80"
-                        alt="Bhagavad Gita AI"
+                        alt="Bhāgavatam"
                       />
-                      <AvatarFallback>BG</AvatarFallback>
+                      <AvatarFallback>BV</AvatarFallback>
                     </Avatar>
-                    <span className="text-xs font-medium">
-                      Bhagavad Gita AI
-                    </span>
+                    <span className="text-xs font-medium">Bhāgavatam</span>
                   </div>
                 )}
                 <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -116,13 +114,11 @@ const ChatInterface = ({
                   <Avatar className="h-6 w-6 mr-2">
                     <AvatarImage
                       src="https://images.unsplash.com/photo-1603548746365-6ca5b2a3d8f6?w=100&q=80"
-                      alt="Bhagavad Gita AI"
+                      alt="Bhāgavatam"
                     />
-                    <AvatarFallback>BG</AvatarFallback>
+                    <AvatarFallback>BV</AvatarFallback>
                   </Avatar>
-                  <span className="text-xs font-medium mr-2">
-                    Bhagavad Gita AI
-                  </span>
+                  <span className="text-xs font-medium mr-2">Bhāgavatam</span>
                   <Loader2 className="h-4 w-4 animate-spin" />
                 </div>
               </div>
