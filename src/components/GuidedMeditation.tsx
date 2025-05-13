@@ -103,7 +103,7 @@ const GuidedMeditation = ({
   const progressPercentage = (timeElapsed / duration) * 100;
 
   return (
-    <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200">
+    <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200 h-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-orange-800">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

@@ -22,9 +22,9 @@ const GuidancePanel = ({
   const [expanded, setExpanded] = useState<string | null>("common-questions");
 
   const commonQuestions = [
-    "What is the main message of the Bhagavad Gita?",
-    "How can I find inner peace according to the Gita?",
-    "What does Krishna say about duty (dharma)?",
+    "What is the main message of the Bhāgavatam?",
+    "How can I find inner peace according to the Bhāgavatam?",
+    "What does the Bhāgavatam say about duty (dharma)?",
     "How to overcome fear and anxiety?",
     "What is karma yoga?",
     "How to practice detachment?",
@@ -73,7 +73,7 @@ const GuidancePanel = ({
   };
 
   const handleTeachingClick = (teaching: string) => {
-    onSelectQuestion(`Tell me about ${teaching} in the Bhagavad Gita`);
+    onSelectQuestion(`Tell me about ${teaching} in the Bhāgavatam`);
     if (window.innerWidth < 768) {
       onToggle();
     }
@@ -81,7 +81,8 @@ const GuidancePanel = ({
 
   return (
     <div
-      className={`bg-slate-50 border-l border-slate-200 h-full overflow-y-auto transition-all duration-300 ${isOpen ? "w-full md:w-[350px]" : "w-0 overflow-hidden"}`}
+      className={`bg-slate-50 border-l border-slate-200 h-full overflow-y-auto overscroll-contain transition-all duration-300 ${isOpen ? "w-full md:w-[350px]" : "w-0 overflow-hidden"} flex flex-col`}
+      style={{ WebkitOverflowScrolling: "touch" }}
     >
       <div className="p-4 flex justify-between items-center border-b border-slate-200">
         <h2 className="text-lg font-medium text-slate-800">Guidance</h2>

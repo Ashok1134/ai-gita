@@ -3,7 +3,7 @@ import { Heart, ExternalLink } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-orange-100 py-4 px-6 shadow-inner">
+    <footer className="bg-orange-100 py-3 px-3 sm:py-4 sm:px-6 shadow-inner">
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
@@ -13,7 +13,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4 flex-wrap justify-center">
             <a
               href="#"
               className="text-sm text-orange-800 hover:text-orange-600 transition-colors flex items-center gap-1"

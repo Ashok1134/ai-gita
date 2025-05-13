@@ -10,6 +10,7 @@ import {
   BookMarked,
   Settings,
   User,
+  Search,
 } from "lucide-react";
 import Footer from "./Footer";
 import ThemeToggle from "./ThemeToggle";
@@ -31,21 +32,27 @@ const Home = () => {
   const [showGuidance, setShowGuidance] = useState(false);
   const [showVerses, setShowVerses] = useState(false);
   const [activeTab, setActiveTab] = useState("chat");
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [showSearch, setShowSearch] = useState(false);
 
   // Handle URL hash for direct tab access
   React.useEffect(() => {
-    const hash = window.location.hash.replace("#", "");
-    if (hash === "wisdom" || hash === "meditation" || hash === "chat") {
-      setActiveTab(hash);
+    if (isFirstLoad) {
+      const hash = window.location.hash.replace("#", "");
+      if (hash === "wisdom" || hash === "meditation" || hash === "chat") {
+        setActiveTab(hash);
+      } else {
+        // Set default tab if no hash is present
+        window.location.hash = activeTab;
+      }
+      setIsFirstLoad(false);
+    } else {
+      // Update hash when tab changes
+      if (window.location.hash !== `#${activeTab}`) {
+        window.location.hash = activeTab;
+      }
     }
-
-    // Update hash when tab changes
-    const handleTabChange = (tab: string) => {
-      window.location.hash = tab;
-    };
-
-    handleTabChange(activeTab);
-  }, [activeTab]);
+  }, [activeTab, isFirstLoad]);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -109,15 +116,35 @@ const Home = () => {
     }
   };
 
+  const handleSearch = (query: string) => {
+    setActiveTab("chat");
+    handleSendMessage(`Search the Bhāgavatam for: ${query}`);
+    setShowSearch(false);
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gradient-to-br from-amber-50 to-orange-50">
       {/* Header */}
-      <header className="flex flex-col p-4 bg-orange-100 shadow-sm">
+      <header className="flex flex-col p-2 sm:p-4 bg-orange-100 shadow-sm">
         <div className="flex items-center justify-between mb-3">
           <h1 className="text-2xl font-bold text-orange-800">Bhāgavatam</h1>
           <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowSearch(!showSearch)}
+              className="text-orange-800"
+              aria-label="Search"
+            >
+              <Search className="h-5 w-5" />
+            </Button>
             <ThemeToggle />
-            <Button variant="ghost" size="icon" className="text-orange-800">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-orange-800"
+              aria-label="User profile"
+            >
               <User className="h-5 w-5" />
             </Button>
             <Button
@@ -125,6 +152,7 @@ const Home = () => {
               size="icon"
               onClick={() => setShowVerses(!showVerses)}
               className="md:hidden text-orange-800"
+              aria-label="Toggle verses panel"
             >
               <BookOpen className="h-5 w-5" />
             </Button>
@@ -133,19 +161,27 @@ const Home = () => {
               size="icon"
               onClick={() => setShowGuidance(!showGuidance)}
               className="md:hidden text-orange-800"
+              aria-label="Toggle guidance panel"
             >
               <Menu className="h-5 w-5" />
             </Button>
           </div>
         </div>
 
+        {/* Search Bar */}
+        {showSearch && (
+          <div className="mb-3">
+            <SearchBar onSearch={handleSearch} />
+          </div>
+        )}
+
         {/* Navigation Bar */}
-        <nav className="flex space-x-2">
+        <nav className="flex space-x-1 sm:space-x-2 overflow-x-auto pb-1">
           <Button
             variant={activeTab === "chat" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveTab("chat")}
-            className="flex items-center gap-1"
+            className="flex items-center gap-1 whitespace-nowrap"
           >
             <Quote className="h-4 w-4" />
             Chat
@@ -154,7 +190,7 @@ const Home = () => {
             variant={activeTab === "wisdom" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveTab("wisdom")}
-            className="flex items-center gap-1"
+            className="flex items-center gap-1 whitespace-nowrap"
           >
             <BookOpen className="h-4 w-4" />
             Daily Wisdom
@@ -163,7 +199,7 @@ const Home = () => {
             variant={activeTab === "meditation" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveTab("meditation")}
-            className="flex items-center gap-1"
+            className="flex items-center gap-1 whitespace-nowrap"
           >
             <Clock className="h-4 w-4" />
             Meditation
@@ -172,10 +208,10 @@ const Home = () => {
       </header>
 
       {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden relative">
         {/* Left Sidebar - Verse References */}
         <motion.div
-          className={`${showVerses ? "flex" : "hidden"} md:flex w-full md:w-80 lg:w-96 bg-orange-50 border-r border-orange-200`}
+          className={`${showVerses ? "flex" : "hidden"} md:flex w-full md:w-80 lg:w-96 bg-orange-50 border-r border-orange-200 absolute md:relative z-10 h-full`}
           initial={{ x: "-100%" }}
           animate={{ x: showVerses ? 0 : "-100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -193,7 +229,7 @@ const Home = () => {
         </motion.div>
 
         {/* Center Content Area */}
-        <div className="flex flex-col flex-1 overflow-hidden p-4">
+        <div className="flex flex-col flex-1 overflow-hidden p-2 sm:p-4 w-full">
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
@@ -231,8 +267,12 @@ const Home = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="wisdom" className="h-full overflow-y-auto">
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 p-2">
+            <TabsContent
+              value="wisdom"
+              className="h-full overflow-y-auto overscroll-contain pb-20"
+              style={{ WebkitOverflowScrolling: "touch" }}
+            >
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-1 sm:p-2">
                 <DailyWisdom
                   onReadMore={() => {
                     setActiveTab("chat");
@@ -332,8 +372,12 @@ const Home = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="meditation" className="h-full overflow-y-auto">
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 p-2">
+            <TabsContent
+              value="meditation"
+              className="h-full overflow-y-auto overscroll-contain pb-20"
+              style={{ WebkitOverflowScrolling: "touch" }}
+            >
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-1 sm:p-2">
                 <div className="md:col-span-2 lg:col-span-1">
                   <MeditationTimer
                     onComplete={() => {
@@ -468,7 +512,7 @@ const Home = () => {
 
         {/* Right Sidebar - Guidance Panel */}
         <motion.div
-          className={`${showGuidance ? "flex" : "hidden"} md:flex w-full md:w-80 lg:w-96 bg-orange-50 border-l border-orange-200`}
+          className={`${showGuidance ? "flex" : "hidden"} md:flex w-full md:w-80 lg:w-96 bg-orange-50 border-l border-orange-200 absolute md:relative right-0 z-10 h-full`}
           initial={{ x: "100%" }}
           animate={{ x: showGuidance ? 0 : "100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}

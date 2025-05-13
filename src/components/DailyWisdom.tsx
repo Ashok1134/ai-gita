@@ -31,7 +31,7 @@ const DailyWisdom = ({ onReadMore = () => {} }: DailyWisdomProps) => {
   };
 
   return (
-    <Card className="border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50">
+    <Card className="border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50 h-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-orange-800">Daily Wisdom</CardTitle>
         <CardDescription>

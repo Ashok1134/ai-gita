@@ -131,7 +131,7 @@ const VerseReference = ({ onSelectVerse = () => {} }: VerseReferenceProps) => {
     <div className="bg-white border rounded-md overflow-hidden h-full flex flex-col">
       <div className="p-4 border-b bg-orange-50">
         <h2 className="text-lg font-semibold text-orange-800 mb-2">
-          Bhagavad Gita Verses
+          Bhāgavatam Verses
         </h2>
         <div className="relative mb-3">
           <Input
@@ -159,7 +159,10 @@ const VerseReference = ({ onSelectVerse = () => {} }: VerseReferenceProps) => {
         </div>
       </div>
 
-      <ScrollArea className="flex-1">
+      <div
+        className="flex-1 overflow-y-auto overscroll-contain"
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
         <div className="p-2 space-y-2">
           {sortedVerses.length > 0 ? (
             sortedVerses.map((verse) => (
@@ -188,7 +191,7 @@ const VerseReference = ({ onSelectVerse = () => {} }: VerseReferenceProps) => {
             </div>
           )}
         </div>
-      </ScrollArea>
+      </div>
     </div>
   );
 };

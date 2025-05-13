@@ -3,7 +3,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 // Initialize the Google Generative AI SDK
 // Access the API key from environment variables
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-console.log("API Key configured:", API_KEY ? "Yes" : "No");
 
 // Create a client with the API key
 const genAI = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;

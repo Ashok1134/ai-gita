@@ -31,18 +31,23 @@ const MeditationTimer = ({
 
   // Initialize ambient sound
   useEffect(() => {
-    const audio = new Audio(
-      "https://cdn.pixabay.com/download/audio/2022/03/15/audio_1fb1757219.mp3?filename=om-mantra-118-bpm-with-background-music-118-bpm-61s-8683.mp3",
-    );
-    audio.loop = true;
-    setAmbientSound(audio);
+    try {
+      const audio = new Audio(
+        "https://cdn.pixabay.com/download/audio/2022/03/15/audio_1fb1757219.mp3?filename=om-mantra-118-bpm-with-background-music-118-bpm-61s-8683.mp3",
+      );
+      audio.loop = true;
+      audio.preload = "auto";
+      setAmbientSound(audio);
 
-    return () => {
-      if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
-      }
-    };
+      return () => {
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      };
+    } catch (error) {
+      console.error("Error initializing audio:", error);
+    }
   }, []);
 
   // Timer logic
@@ -128,7 +133,7 @@ const MeditationTimer = ({
   };
 
   return (
-    <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200">
+    <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200 h-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-orange-800">Meditation Timer</CardTitle>
         <CardDescription>
